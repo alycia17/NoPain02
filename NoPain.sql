@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.7
 -- Dumped by pg_dump version 9.5.7
 
--- Started on 2018-11-26 12:16:34 BRST
+-- Started on 2018-11-27 12:31:01 BRST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -57,7 +57,8 @@ CREATE TABLE endereco (
     nm_rua character varying,
     nm_bairro character varying,
     nm_cidade character varying,
-    cd_endereco integer NOT NULL
+    cd_endereco integer NOT NULL,
+    usuario_cd_usuario integer
 );
 
 
@@ -89,7 +90,9 @@ CREATE TABLE usuario (
     nick_name character varying,
     cd_usuario integer NOT NULL,
     tp_tipo_usuario smallint,
-    endereco_cd_endereco integer
+    nr_cpf numeric(11,0),
+    nr_cnpj numeric(14,0),
+    nr_telefone numeric(11,0)
 );
 
 
@@ -112,7 +115,7 @@ COMMENT ON COLUMN usuario.tp_tipo_usuario IS '0 = admin
 -- Data for Name: endereco; Type: TABLE DATA; Schema: no_pain; Owner: postgres
 --
 
-COPY endereco (nm_rua, nm_bairro, nm_cidade, cd_endereco) FROM stdin;
+COPY endereco (nm_rua, nm_bairro, nm_cidade, cd_endereco, usuario_cd_usuario) FROM stdin;
 \.
 
 
@@ -132,7 +135,7 @@ COPY post (nm_comentario, cd_post, usuario_cd_usuario) FROM stdin;
 -- Data for Name: usuario; Type: TABLE DATA; Schema: no_pain; Owner: postgres
 --
 
-COPY usuario (nm_nome, ds_senha, ds_email, nick_name, cd_usuario, tp_tipo_usuario, endereco_cd_endereco) FROM stdin;
+COPY usuario (nm_nome, ds_senha, ds_email, nick_name, cd_usuario, tp_tipo_usuario, nr_cpf, nr_cnpj, nr_telefone) FROM stdin;
 \.
 
 
@@ -146,7 +149,7 @@ ALTER TABLE ONLY endereco
 
 
 --
--- TOC entry 2034 (class 2606 OID 24805)
+-- TOC entry 2033 (class 2606 OID 24805)
 -- Name: pk_post; Type: CONSTRAINT; Schema: no_pain; Owner: postgres
 --
 
@@ -155,7 +158,7 @@ ALTER TABLE ONLY post
 
 
 --
--- TOC entry 2031 (class 2606 OID 24803)
+-- TOC entry 2030 (class 2606 OID 24803)
 -- Name: pk_usuario; Type: CONSTRAINT; Schema: no_pain; Owner: postgres
 --
 
@@ -164,15 +167,15 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2029 (class 1259 OID 24895)
--- Name: fki_endereco_usuario; Type: INDEX; Schema: no_pain; Owner: postgres
+-- TOC entry 2034 (class 1259 OID 24909)
+-- Name: fki_usuario_endereco; Type: INDEX; Schema: no_pain; Owner: postgres
 --
 
-CREATE INDEX fki_endereco_usuario ON usuario USING btree (endereco_cd_endereco);
+CREATE INDEX fki_usuario_endereco ON endereco USING btree (usuario_cd_usuario);
 
 
 --
--- TOC entry 2032 (class 1259 OID 24841)
+-- TOC entry 2031 (class 1259 OID 24841)
 -- Name: fki_usuario_post; Type: INDEX; Schema: no_pain; Owner: postgres
 --
 
@@ -180,16 +183,16 @@ CREATE INDEX fki_usuario_post ON post USING btree (usuario_cd_usuario);
 
 
 --
--- TOC entry 2037 (class 2606 OID 24890)
--- Name: fk_endereco_usuario; Type: FK CONSTRAINT; Schema: no_pain; Owner: postgres
+-- TOC entry 2038 (class 2606 OID 24904)
+-- Name: fk_usuario_endereco; Type: FK CONSTRAINT; Schema: no_pain; Owner: postgres
 --
 
-ALTER TABLE ONLY usuario
-    ADD CONSTRAINT fk_endereco_usuario FOREIGN KEY (endereco_cd_endereco) REFERENCES endereco(cd_endereco);
+ALTER TABLE ONLY endereco
+    ADD CONSTRAINT fk_usuario_endereco FOREIGN KEY (usuario_cd_usuario) REFERENCES usuario(cd_usuario);
 
 
 --
--- TOC entry 2038 (class 2606 OID 24836)
+-- TOC entry 2037 (class 2606 OID 24836)
 -- Name: fk_usuario_post; Type: FK CONSTRAINT; Schema: no_pain; Owner: postgres
 --
 
@@ -209,7 +212,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2018-11-26 12:16:34 BRST
+-- Completed on 2018-11-27 12:31:02 BRST
 
 --
 -- PostgreSQL database dump complete
