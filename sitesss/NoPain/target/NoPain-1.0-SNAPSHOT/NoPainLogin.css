@@ -1,0 +1,31 @@
+body{
+	background: pink;
+}
+ 
+form{
+	background: linear-gradient(pink, white);
+	margin: 40px;
+	padding: 40px;
+	border-radius: 40px;
+	border: groove;
+	height: 350px;
+	width: 550px;
+}
+
+h1{
+	color: lightblue;
+	border:groove;
+	border-radius: 10px;
+}
+
+#a{
+	background: purple;
+}
+
+img{
+	margin: auto;
+	background: linear-gradient(white, pink);
+	width: 120px;
+	border-radius: 30px;
+	border: groove;
+}

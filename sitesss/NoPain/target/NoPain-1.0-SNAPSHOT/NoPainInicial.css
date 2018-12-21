@@ -1,0 +1,21 @@
+img{
+	margin: auto;
+	background: linear-gradient(lightblue, white);
+	width: 120px;
+	border-radius: 30px;
+	border: groove;
+}
+
+body{
+	background: lightgreen;
+}
+
+h1{
+	color: lightgreen;
+	border:groove;
+	border-radius: 10px;
+}
+
+#bem{
+	background: green;
+}
